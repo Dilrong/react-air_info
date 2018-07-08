@@ -1,0 +1,8 @@
+.AirInfo p {
+    font-size: 1.2rem;
+    color: #868e96;
+}
+
+.AirInfo p b {
+    color: #212529;
+}
