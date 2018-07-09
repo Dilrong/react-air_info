@@ -6,3 +6,10 @@
 .AirInfo p b {
     color: #212529;
 }
+
+.AirInfo {
+    list-style-type: none;
+    background-color: #F0F0F0;
+    padding: 1rem;
+    border-radius: 5px;
+}

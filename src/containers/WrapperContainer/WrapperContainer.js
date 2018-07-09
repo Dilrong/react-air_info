@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Wrapper, Navigate, Face} from '../../components';
-import PropTypes from 'prop-types';
 
 class WrapperContainer extends Component{
     state = {
@@ -12,25 +11,34 @@ class WrapperContainer extends Component{
     _getAirInfo = async () => {
         const airs = await this._callAirInfo(37.428137, 126.664985)
         this.setState({
-            airs
+            city: airs.data.city,
+            aqius: airs.data.current.pollution.aqius,
+            tp: airs.data.current.weather.tp,
+            pr: airs.data.current.weather.pr,
+            hu: airs.data.current.weather.hu,
+            ws: airs.data.current.weather.ws,
         })
-        console.log(airs)
+        console.log(airs.data)
     }
     _callAirInfo = (lat, long) => {
         return fetch('http://api.airvisual.com/v2/nearest_city?lat={lat}&lon={long}&rad=500&key=AZezEShyHMiEa8789')
             .then(request => request.json())
-            .then(json => json.data)
+            .then(json => json)
             .catch(err => console.log(err))
     }
 
     render(){
-        const {airs} = this.state;
+        const {city, aqius, tp, pr, hu, ws} = this.state;
         return(
             <Wrapper>
                 <Navigate/>
                 <Face
-                    //city = {airs.city}
-                    //aqius = {airs.aqius}
+                    city = {city}
+                    aqius = {aqius}
+                    tp = {tp}
+                    pr = {pr}
+                    hu = {hu}
+                    ws = {ws}
                 />
             </Wrapper>
         );
