@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {Wrapper, Navigate, Face} from '../../components';
+import {Wrapper, Face} from '../../components';
 
 class WrapperContainer extends Component{
     state = {
     }
     componentDidMount() {
-        this._getAirInfo();
+        this._getAirInfo(this._getlocation);
     }
 
-    _getAirInfo = async () => {
-        const airs = await this._callAirInfo(37.428137, 126.664985)
+    _getAirInfo = async (lat, long) => {
+        const airs = await this._callAirInfo(lat, long)
         this.setState({
             city: airs.data.city,
             aqius: airs.data.current.pollution.aqius,
@@ -26,6 +26,15 @@ class WrapperContainer extends Component{
             .then(json => json)
             .catch(err => console.log(err))
     }
+    
+        _getlocation = navigator.geolocation.getCurrentPosition(position => {
+        this._getAirInfo(position.coords.latitude, position.coords.longitude)
+    },
+    error => {
+        this.setState({
+          error: error
+        })
+      });
 
     render(){
         const {city, aqius, tp, pr, hu, ws} = this.state;
